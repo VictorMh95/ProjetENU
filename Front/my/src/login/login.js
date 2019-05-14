@@ -4,6 +4,8 @@ import  './login.css'
 // eslint-disable-next-line
 import {Link} from 'react-router-dom';
 
+const authUrl = "http://127.0.0.1:5000/auth";
+
 
 class LoginPage extends React.Component {
     constructor(props) {
@@ -12,7 +14,8 @@ class LoginPage extends React.Component {
         this.state = {
             username: '',    
             password: '',
-            submitted: false
+            submitted: false,
+            token:''
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -28,26 +31,49 @@ class LoginPage extends React.Component {
     }
 
     handleSubmit(e) {
-   alert(this.state.username)
+      fetch(authUrl,
+        {
+          headers: {
+            'Content-Type':'application/json'
+          },
+          method: "POST",
+          body:JSON.stringify({username: this.state.username, password:this.state.password})
+      }).then((response) => {
+        return response.json();
+      })
+      .then((jsonObject) => {
+        this.setState({token:jsonObject})
+      })
+      .catch((error) => {
+        console.log(error)
+      });
+
+      this.props.isLogged(this.state.token);
+
     }
 
     render() {
-        const { username, password, submitted } = this.state;
+        //const { username, password, submitted } = this.state;
         return(
-<div className="login-page">
-  <div className="form">
-    <form className="login-form" onSubmit={this.handleSubmit}>
-        <input type="text" placeholder="username" name="username" value={this.state.username} onChange={this.handleChange}/>
-        {/*submitted && !username &&
-        <div className="help-block">Username is required</div>
-        */}
-        <input type="password" placeholder="password" name="password" value={this.state.password} onChange={this.handleChange}/>
-        {/*submitted && !password && 
-        <div className="help-block">Password is required</div>
-        */}
-        <button>login</button>
-        <p className="message">Not registered? </p>
-    </form>
+<div>
+  <div className="title-login">  
+    <h2 >Welcome to transparence</h2>
+  </div>
+  <div className="login-page">
+    <div className="form">
+      <form className="login-form" onSubmit={this.handleSubmit}>
+          <input type="text" placeholder="username" name="username" value={this.state.username} onChange={this.handleChange}/>
+          {/*submitted && !username &&
+          <div className="help-block">Username is required</div>
+          */}
+          <input type="password" placeholder="password" name="password" value={this.state.password} onChange={this.handleChange}/>
+          {/*submitted && !password && 
+          <div className="help-block">Password is required</div>
+          */}
+          <button>login</button>
+          <a className="message" href="/register">Not registered? </a>
+      </form>
+    </div>
   </div>
 </div>
   );

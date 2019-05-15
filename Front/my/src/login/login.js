@@ -2,7 +2,7 @@ import React from 'react';
 
 import  './login.css'
 // eslint-disable-next-line
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 
 const authUrl = "http://127.0.0.1:5000/auth";
 
@@ -14,13 +14,20 @@ class LoginPage extends React.Component {
         this.state = {
             username: '',    
             password: '',
-            submitted: false,
-            token:''
+            logged: undefined,
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+
+    componentWillUpdate(){
+      const jwttoken = localStorage.getItem("JwtToken")
+
+    }
+
+
+
 
     handleChange(e) {
         const target = e.target;
@@ -31,6 +38,8 @@ class LoginPage extends React.Component {
     }
 
     handleSubmit(e) {
+      e.preventDefault();
+
       fetch(authUrl,
         {
           headers: {
@@ -39,21 +48,29 @@ class LoginPage extends React.Component {
           method: "POST",
           body:JSON.stringify({username: this.state.username, password:this.state.password})
       }).then((response) => {
-        return response.json();
+        if(response.status === 200){
+          localStorage.setItem('JwtToken', response.json().access_token);
+          this.setState({logged:true})
+        }else{
+          this.setState({logged:false})
+        }
+        alert('A name was submitted: ' + this.state.logged);
+
       })
-      .then((jsonObject) => {
-        this.setState({token:jsonObject})
-      })
-      .catch((error) => {
+      .catch((error) => { 
         console.log(error)
       });
 
-      this.props.isLogged(this.state.token);
-
+      
+     
     }
 
+
     render() {
-        //const { username, password, submitted } = this.state;
+
+     if (this.state.logged) {
+       return <Redirect to='/HomePage'/>;
+     }else{     
         return(
 <div>
   <div className="title-login">  
@@ -70,13 +87,14 @@ class LoginPage extends React.Component {
           {/*submitted && !password && 
           <div className="help-block">Password is required</div>
           */}
-          <button>login</button>
-          <a className="message" href="/register">Not registered? </a>
+          <input type="submit" value="Submit" />
+          <Link to="/register">Not registered ?</Link>
       </form>
     </div>
   </div>
 </div>
   );
+        }
     }
 }
 

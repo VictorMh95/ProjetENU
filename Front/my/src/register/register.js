@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 //import  './register.css'
 
@@ -22,7 +23,7 @@ class RegisterPage extends React.Component {
         <input type="password" placeholder="password"/>
         <input type="text" placeholder="email address"/>
         <button>create</button>
-        <p className="message">Already registered? </p> 
+        <Link to="/login">already registered?</Link>
       </form>
     </div>
   </div>

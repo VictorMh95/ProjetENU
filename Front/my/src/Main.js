@@ -1,6 +1,9 @@
 import React from "react";
-import  LoginPage from "./login/login";
-import RegisterPage from "./register/register"
+import LoginPage from "./login/login";
+import RegisterPage from "./register/register";
+import HomePage from"./home/home";
+
+import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from "react-router-dom";
 
 
 class Main extends React.Component {
@@ -8,29 +11,25 @@ class Main extends React.Component {
     super(props);
 
     this.state = {
-      isLoggedin:true
+      logged:false
     };
 }
 
-isLogged = (dataFromLogin) => {
- // this.setState({JwtToken:dataFromLogin})
-}
-
   render() {
-    let isLoggedin = this.state.isLoggedin;
-    let login;
-
-    if (isLoggedin === false){
-      login = <RegisterPage/>
+   /* let page;
+    if(this.state.logged){
+      page = <HomePage/>
     }else{
-      login= <LoginPage isLogged={this.isLogged}/>
+      page = <LoginPage/>
     }
-
-    
+    */
     return (
-  login    
-);
+<div>Header</div>
+    );
   }
+
 }
  
 export default Main;
+
+

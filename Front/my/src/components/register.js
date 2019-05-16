@@ -23,7 +23,7 @@ class RegisterPage extends React.Component {
         <input type="password" placeholder="password"/>
         <input type="text" placeholder="email address"/>
         <button>create</button>
-        <Link to="/login">already registered?</Link>
+        <Link to="/">already registered?</Link>
       </form>
     </div>
   </div>

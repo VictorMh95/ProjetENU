@@ -1,30 +1,23 @@
 import React from "react";
-import LoginPage from "./login/login";
-import RegisterPage from "./register/register";
-import HomePage from"./home/home";
+import LoginPage from "./components/login";
+import RegisterPage from "./components/register";
+import HomePage from"./components/home";
+import Error from "./components/Error";
 
-import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from "react-router-dom";
+import { BrowserRouter as Router, Route ,Switch } from "react-router-dom";
 
 
 class Main extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      logged:false
-    };
-}
-
   render() {
-   /* let page;
-    if(this.state.logged){
-      page = <HomePage/>
-    }else{
-      page = <LoginPage/>
-    }
-    */
     return (
-<div>Header</div>
+      <Router>
+      <Switch>
+        <Route path='/' component={LoginPage} exact />
+        <Route path='/register' component={RegisterPage} />
+        <Route path='/HomePage' component={HomePage} />
+        <Route component={Error} />
+      </Switch>
+    </Router>
     );
   }
 

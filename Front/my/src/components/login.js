@@ -21,10 +21,7 @@ class LoginPage extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentWillUpdate(){
-      const jwttoken = localStorage.getItem("JwtToken")
 
-    }
 
 
 
@@ -54,8 +51,6 @@ class LoginPage extends React.Component {
         }else{
           this.setState({logged:false})
         }
-        alert('A name was submitted: ' + this.state.logged);
-
       })
       .catch((error) => { 
         console.log(error)

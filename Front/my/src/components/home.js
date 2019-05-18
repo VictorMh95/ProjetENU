@@ -1,7 +1,8 @@
 import React from 'react';
 
-import  './home.css'
-
+import  './components_css/home.css'
+import Navbar from './navbar.js'
+import Profile from './profile.js'
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -12,12 +13,22 @@ class HomePage extends React.Component {
     }
 
     
-
     render() {
         return(
-<div>
- <p>HOME</p>
-</div>
+        <div>
+            <header>
+                <p>image</p>
+            </header>
+            <nav>
+            <Navbar/>
+            </nav>
+            <div className="body">
+                <div className="profile-box">
+                    <Profile/>
+                </div>
+            </div>
+        </div>
+            
   );
     }
 }
